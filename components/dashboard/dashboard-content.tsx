@@ -10,13 +10,13 @@ import { LeaveCalendar } from "@/components/leave/leave-calendar"
 import { ApprovalQueue } from "@/components/leave/approval-queue"
 import { ReportsView } from "@/components/leave/reports-view"
 import { BusinessSettings } from "@/components/business/business-settings"
-import { NotificationCenter } from "@/components/notifications/notification-center"
+import { NotificationBell } from "@/components/notifications/notification-bell"
 import { useRouter } from "next/navigation"
 import { Logo } from "@/components/ui/logo"
 import { LanguageSwitcher } from "@/components/ui/language-switcher"
 import { useLanguage } from "@/hooks/use-language"
 import { useSupabaseAuth } from "@/hooks/use-supabase-auth"
-import { useNotifications } from "@/hooks/use-notifications"
+import { useNotificationContext } from "@/components/notifications/notification-provider"
 import type { Database } from "@/lib/supabase/database.types"
 import { TrialBanner } from "@/components/subscription/trial-banner"
 
@@ -31,7 +31,7 @@ function DashboardContentInner({ user }: DashboardContentProps) {
   const [leaveRequests, setLeaveRequests] = useState([])
   const [pendingApprovals, setPendingApprovals] = useState([])
   const { signOut } = useSupabaseAuth()
-  const { unreadCount } = useNotifications()
+  const { unreadCount } = useNotificationContext()
   const router = useRouter()
   const { language, setLanguage, t } = useLanguage()
 
@@ -245,7 +245,7 @@ function DashboardContentInner({ user }: DashboardContentProps) {
       <div className="flex items-center justify-between">
         <Logo />
         <div className="flex items-center space-x-4">
-          <NotificationCenter />
+          <NotificationBell />
           <LanguageSwitcher currentLanguage={language} onLanguageChange={setLanguage} />
           <Button variant="outline" onClick={handleSignOut}>
             Sign Out

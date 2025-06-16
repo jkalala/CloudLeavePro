@@ -86,6 +86,27 @@
       opacity: 1;
     }
   }
+
+  /* Notification toast styles */
+  .notification-toast {
+    @apply border-l-4;
+  }
+
+  .notification-toast.priority-urgent {
+    @apply border-l-red-500 bg-red-50;
+  }
+
+  .notification-toast.priority-high {
+    @apply border-l-orange-500 bg-orange-50;
+  }
+
+  .notification-toast.priority-normal {
+    @apply border-l-blue-500 bg-blue-50;
+  }
+
+  .notification-toast.priority-low {
+    @apply border-l-gray-500 bg-gray-50;
+  }
 }
 
 /* Custom scrollbar */

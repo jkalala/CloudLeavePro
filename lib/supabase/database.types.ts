@@ -134,6 +134,9 @@ export interface Database {
           features: Json
           is_active: boolean
           created_at: string
+          stripe_price_id_monthly: string | null
+          stripe_price_id_yearly: string | null
+          stripe_product_id: string | null
         }
         Insert: {
           id?: number
@@ -144,6 +147,9 @@ export interface Database {
           features: Json
           is_active?: boolean
           created_at?: string
+          stripe_price_id_monthly?: string | null
+          stripe_price_id_yearly?: string | null
+          stripe_product_id?: string | null
         }
         Update: {
           id?: number
@@ -154,6 +160,9 @@ export interface Database {
           features?: Json
           is_active?: boolean
           created_at?: string
+          stripe_price_id_monthly?: string | null
+          stripe_price_id_yearly?: string | null
+          stripe_product_id?: string | null
         }
       }
       leave_requests: {
@@ -215,13 +224,291 @@ export interface Database {
           updated_at?: string
         }
       }
-      // Other tables remain the same...
+      notifications: {
+        Row: {
+          id: string
+          user_id: string
+          title: string
+          message: string
+          type: string
+          priority: "low" | "normal" | "high" | "urgent"
+          is_read: boolean
+          action_url: string | null
+          action_label: string | null
+          expires_at: string | null
+          read_at: string | null
+          metadata: Json
+          related_leave_request_id: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          title: string
+          message: string
+          type: string
+          priority?: "low" | "normal" | "high" | "urgent"
+          is_read?: boolean
+          action_url?: string | null
+          action_label?: string | null
+          expires_at?: string | null
+          read_at?: string | null
+          metadata?: Json
+          related_leave_request_id?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          title?: string
+          message?: string
+          type?: string
+          priority?: "low" | "normal" | "high" | "urgent"
+          is_read?: boolean
+          action_url?: string | null
+          action_label?: string | null
+          expires_at?: string | null
+          read_at?: string | null
+          metadata?: Json
+          related_leave_request_id?: string | null
+          created_at?: string
+        }
+      }
+      notification_preferences: {
+        Row: {
+          id: string
+          user_id: string
+          email_enabled: boolean
+          push_enabled: boolean
+          leave_request_submitted: boolean
+          leave_request_approved: boolean
+          leave_request_rejected: boolean
+          approval_required: boolean
+          leave_reminder: boolean
+          system_updates: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          email_enabled?: boolean
+          push_enabled?: boolean
+          leave_request_submitted?: boolean
+          leave_request_approved?: boolean
+          leave_request_rejected?: boolean
+          approval_required?: boolean
+          leave_reminder?: boolean
+          system_updates?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          email_enabled?: boolean
+          push_enabled?: boolean
+          leave_request_submitted?: boolean
+          leave_request_approved?: boolean
+          leave_request_rejected?: boolean
+          approval_required?: boolean
+          leave_reminder?: boolean
+          system_updates?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      notification_templates: {
+        Row: {
+          id: number
+          type: string
+          title_template: string
+          message_template: string
+          email_subject_template: string | null
+          email_body_template: string | null
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: number
+          type: string
+          title_template: string
+          message_template: string
+          email_subject_template?: string | null
+          email_body_template?: string | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          type?: string
+          title_template?: string
+          message_template?: string
+          email_subject_template?: string | null
+          email_body_template?: string | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      payment_methods: {
+        Row: {
+          id: string
+          user_id: string
+          stripe_payment_method_id: string
+          type: string
+          brand: string | null
+          last4: string | null
+          exp_month: number | null
+          exp_year: number | null
+          is_default: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          stripe_payment_method_id: string
+          type: string
+          brand?: string | null
+          last4?: string | null
+          exp_month?: number | null
+          exp_year?: number | null
+          is_default?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          stripe_payment_method_id?: string
+          type?: string
+          brand?: string | null
+          last4?: string | null
+          exp_month?: number | null
+          exp_year?: number | null
+          is_default?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      subscriptions: {
+        Row: {
+          id: string
+          user_id: string
+          stripe_subscription_id: string
+          stripe_customer_id: string
+          plan_code: string
+          status: string
+          current_period_start: string
+          current_period_end: string
+          cancel_at_period_end: boolean
+          canceled_at: string | null
+          trial_start: string | null
+          trial_end: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          stripe_subscription_id: string
+          stripe_customer_id: string
+          plan_code: string
+          status: string
+          current_period_start: string
+          current_period_end: string
+          cancel_at_period_end?: boolean
+          canceled_at?: string | null
+          trial_start?: string | null
+          trial_end?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          stripe_subscription_id?: string
+          stripe_customer_id?: string
+          plan_code?: string
+          status?: string
+          current_period_start?: string
+          current_period_end?: string
+          cancel_at_period_end?: boolean
+          canceled_at?: string | null
+          trial_start?: string | null
+          trial_end?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      invoices: {
+        Row: {
+          id: string
+          user_id: string
+          subscription_id: string
+          stripe_invoice_id: string
+          amount_paid: number
+          amount_due: number
+          currency: string
+          status: string
+          invoice_pdf: string | null
+          hosted_invoice_url: string | null
+          invoice_number: string | null
+          period_start: string | null
+          period_end: string | null
+          due_date: string | null
+          paid_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          subscription_id: string
+          stripe_invoice_id: string
+          amount_paid: number
+          amount_due: number
+          currency?: string
+          status: string
+          invoice_pdf?: string | null
+          hosted_invoice_url?: string | null
+          invoice_number?: string | null
+          period_start?: string | null
+          period_end?: string | null
+          due_date?: string | null
+          paid_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          subscription_id?: string
+          stripe_invoice_id?: string
+          amount_paid?: number
+          amount_due?: number
+          currency?: string
+          status?: string
+          invoice_pdf?: string | null
+          hosted_invoice_url?: string | null
+          invoice_number?: string | null
+          period_start?: string | null
+          period_end?: string | null
+          due_date?: string | null
+          paid_at?: string | null
+          created_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      cleanup_expired_notifications: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       user_role: "EMPLOYEE" | "SUPERVISOR" | "HR" | "DIRECTOR"
